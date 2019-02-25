@@ -66,6 +66,11 @@ public class StringsAndArrays {
         }
     }
 
+    // 1.4 
+    boolean isPermuationOfPalindrome() {
+        return false;
+    }
+
 
     public static void main(String[] args) {
         StringsAndArrays sa = new StringsAndArrays();
