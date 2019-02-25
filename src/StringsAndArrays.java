@@ -40,9 +40,45 @@ public class StringsAndArrays {
         return true;
     }
 
+
+    // 1.3 URLify
+    // Java Strings have a length(). In C, strings are zero-terminated, but not in Java.
+    // But we need a symbol to make the end of the url
+    void relaceSpace(char[] str, int trueLength) {
+        int spaceCount = 0, index, i = 0;
+        for (i = 0; i < trueLength; i++) {
+            if (str[i] == ' ') {
+                spaceCount++;
+            }
+        }
+        index = trueLength + spaceCount * 2;
+        if (index < str.length) str[index] = '\0';
+        for (i = trueLength - 1; i >= 0; i--) {
+            if (str[i] == ' ') {
+                str[index - 1] = '0';
+                str[index - 2] = '2';
+                str[index - 3] = '%';
+                index -= 3;
+            } else {
+                str[index - 1] = str[i];
+                index--;
+            }
+        }
+    }
+
+
     public static void main(String[] args) {
         StringsAndArrays sa = new StringsAndArrays();
 
-        System.out.println(sa.checkPermutation("hh", "HH"));
+        //System.out.println(sa.checkPermutation("hh", "HH"));
+        char[] url = {'J', 'o', 'h', 'n', 'S', 'm', 'i', 't', 'h', ' ',' ', ' ', ' ',' ', ' ', ' '};
+        sa.relaceSpace(url, 10);
+        for (char c : url) {
+            if (c != '\0') {
+                System.out.print(c);
+            } else {
+                break;
+            }
+        }
     }
 }
