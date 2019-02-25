@@ -66,24 +66,95 @@ public class StringsAndArrays {
         }
     }
 
-    // 1.4 
-    boolean isPermuationOfPalindrome() {
-        return false;
+    // 1.4
+    boolean isPermuationOfPalindrome(String str) {
+        int[] map = new int[26];
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (c >= 'a' && c <= 'z') {
+                map[c - 'a']++;
+            }
+
+        }
+        int even = 0, odd = 0;
+
+        for (int i : map) {
+            if (i % 2 == 0) {
+                even++;
+            } else {
+                odd++;
+            }
+        }
+
+        return odd <= 1;
     }
 
+    // assume all the letters are lowercase
+    String generatePalindrome(String str) {
+        int[] map = new int[26];
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if (c >= 'a' && c <= 'z') {
+                map[c - 'a']++;
+            }
+
+        }
+        int even = 0, odd = 0;
+
+        for (int i : map) {
+            if (i % 2 == 0) {
+                even++;
+            } else {
+                odd++;
+            }
+        }
+        if (odd > 1) {
+            return null;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        int oddIdx = 0;
+        for (int i = 0; i < map.length; i++) {
+            int k = map[i];
+            if (k % 2 == 0) {
+                for (int j = 1; j <= k / 2; j++) {
+                    char c =  (char)('a' + i);
+                    sb.append(c);
+                }
+            } else {
+                oddIdx = i;
+            }
+        }
+
+        String lastPart = sb.reverse().toString();
+        sb.reverse();
+        for (int i = 0; i < map[oddIdx]; i++) {
+            sb.append((char)('a' + i));
+        }
+        sb.append(lastPart);
+        return sb.toString();
+    }
+
+    //follow-up generate all the palindromes?
+    
 
     public static void main(String[] args) {
         StringsAndArrays sa = new StringsAndArrays();
 
         //System.out.println(sa.checkPermutation("hh", "HH"));
-        char[] url = {'J', 'o', 'h', 'n', 'S', 'm', 'i', 't', 'h', ' ',' ', ' ', ' ',' ', ' ', ' '};
-        sa.relaceSpace(url, 10);
-        for (char c : url) {
-            if (c != '\0') {
-                System.out.print(c);
-            } else {
-                break;
-            }
-        }
+//        char[] url = {'J', 'o', 'h', 'n', 'S', 'm', 'i', 't', 'h', ' ',' ', ' ', ' ',' ', ' ', ' '};
+//        sa.relaceSpace(url, 10);
+//        for (char c : url) {
+//            if (c != '\0') {
+//                System.out.print(c);
+//            } else {
+//                break;
+//            }
+//        }
+//        String s = "aha   rghaa";
+//        System.out.println(s + " is a permutaion of palindrome: " + sa.isPermuationOfPalindrome(s));
+
+
+        System.out.println(sa.generatePalindrome("hehea"));
     }
 }
