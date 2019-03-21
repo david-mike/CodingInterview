@@ -118,7 +118,7 @@ public class StringsAndArrays {
             int k = map[i];
             if (k % 2 == 0) {
                 for (int j = 1; j <= k / 2; j++) {
-                    char c =  (char)('a' + i);
+                    char c = (char) ('a' + i);
                     sb.append(c);
                 }
             } else {
@@ -129,18 +129,46 @@ public class StringsAndArrays {
         String lastPart = sb.reverse().toString();
         sb.reverse();
         for (int i = 0; i < map[oddIdx]; i++) {
-            sb.append((char)('a' + i));
+            sb.append((char) ('a' + i));
         }
         sb.append(lastPart);
         return sb.toString();
     }
 
     //follow-up generate all the palindromes?
-    
+
+
+    // one away
+
+    boolean oneEditAway(String s1, String s2) {
+        int[][] dp = new int[s1.length() + 1][s2.length() + 1];
+        int m = s1.length();
+        int n = s2.length();
+        for (int i = 1; i <= m; i++) {
+            dp[m][0] = m;
+        }
+        for (int j = 1; j <= n; j++) {
+            dp[0][n] = n;
+        }
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                char c1 = s1.charAt(i);
+                char c2 = s2.charAt(j);
+                if (c1 == c2) {
+                    dp[i + 1][j + 1] = dp[i][j];
+                } else {
+                    dp[i + 1][j + 1] = Math.min(Math.min(dp[i + 1][j], dp[i][j + 1]),dp[i][j]) + 1;
+                }
+            }
+        }
+
+        return dp[m][n] <= 1;
+    }
+
 
     public static void main(String[] args) {
         StringsAndArrays sa = new StringsAndArrays();
-
+//        sa.new Inner();
         //System.out.println(sa.checkPermutation("hh", "HH"));
 //        char[] url = {'J', 'o', 'h', 'n', 'S', 'm', 'i', 't', 'h', ' ',' ', ' ', ' ',' ', ' ', ' '};
 //        sa.relaceSpace(url, 10);
@@ -155,6 +183,14 @@ public class StringsAndArrays {
 //        System.out.println(s + " is a permutaion of palindrome: " + sa.isPermuationOfPalindrome(s));
 
 
-        System.out.println(sa.generatePalindrome("hehea"));
+        //  System.out.println(sa.generatePalindrome("hehea"));
+
+//        String a = "hello";
+//        String b = new String("hello");
+//        System.out.println(a.equals(b)); // true
+//        System.out.println(a == b); // false
+
+        System.out.println(sa.oneEditAway("hello", ""));
+
     }
 }
